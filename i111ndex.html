@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Знакомство | Артур</title>
+    <style>
+        :root {
+            --bg-dark: #070b19;
+            --panel-bg: rgba(13, 22, 47, 0.75);
+            --neon-blue: #00d2ff;
+            --electric-blue: #0066ff;
+            --text-light: #f0f4f8;
+            --text-muted: #8fa0dd;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Задний фон с неоновым свечением */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, rgba(7,11,25,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Полноэкранные секции прокрутки */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Стили контейнера карточки */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                        0 0 40px rgba(0, 102, 255, 0.1);
+            
+            /* Элементы изначально скрыты для анимации */
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Класс активации анимации (добавляется через JS) */
+        .card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-wrapper {
+            flex: 1;
+            max-width: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.15);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .image-wrapper img {
+            transform: scale(1.03);
+        }
+
+        .content-wrapper {
+            flex: 1.2;
+        }
+
+        h1, h2 {
+            color: var(--neon-blue);
+            margin-top: 0;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .accent-text {
+            color: var(--neon-blue);
+            font-weight: 600;
+        }
+
+        /* Список требований (грид сетка) */
+        .grid-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 20px;
+            padding: 0;
+            list-style: none;
+            margin: 20px 0 0 0;
+        }
+
+        .grid-list li {
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        /* Маркер списка в виде неоновой точки */
+        .grid-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        /* Маленькая подпись в самом низу страницы */
+        .footer-credits {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.75rem;
+            color: rgba(143, 160, 221, 0.3); /* Еле заметный цвет */
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Адаптивность для мобильных телефонов */
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                padding: 25px;
+                gap: 25px;
+            }
+            .image-wrapper {
+                max-width: 100%;
+                width: 100%;
+            }
+            .grid-list {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- СЕКЦИЯ 1 -->
+    <section class="section">
+        <div class="card">
+            <div class="image-wrapper">
+                <!-- Первая фотография (в черной кофте) -->
+                <img src="photo1.png" alt="Артур">
+            </div>
+            <div class="content-wrapper">
+                <h1>Всем привет!</h1>
+                <p>Меня зовут <span class="accent-text">Артур</span>, мне 16 лет (но уже 9 ноября будет 17). Я армянин, живу в Москве и полностью зарабатываю на жизнь себе сам.</p>
+                <p>Я работаю <span class="accent-text">вебкоддером</span>. На данный момент имею стабильный заработок в размере <span class="accent-text" style="color: #4edf7a; text-shadow: 0 0 10px rgba(78,223,122,0.3);">$30,000 в месяц</span> и гарантированно буду зарабатывать еще больше.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2 -->
+    <section class="section">
+        <div class="card">
+            <div class="image-wrapper">
+                <!-- Вторая фотография (в белой футболке) -->
+                <img src="photo2.png" alt="Артур">
+            </div>
+            <div class="content-wrapper">
+                <h2>Кого я ищу</h2>
+                <p>Я настроен серьезно и нахожусь в поисках своей будущей жены. Ищу себе классную девочку (желательно альтушку), которая разделит со мной этот путь.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3 -->
+    <section class="section">
+        <div class="card">
+            <div class="image-wrapper">
+                <!-- Третья фотография (черно-белая) -->
+                <img src="photo3.png" alt="Артур">
+            </div>
+            <div class="content-wrapper">
+                <h2>Мои пожелания:</h2>
+                <ul class="grid-list">
+                    <li>Армянка</li>
+                    <li>Красивая</li>
+                    <li>Порядочная</li>
+                    <li>Не пьешь / не куришь</li>
+                    <li>Без друзей-парней</li>
+                    <li>Брюнетка (блонди тож можно)</li>
+                    <li>Глаза карие</li>
+                    <li>Не жирная</li>
+                    <li style="grid-column: 1 / -1; color: var(--neon-blue);">Готова за мной на все что угодно</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОДПИСЬ В САМОМ КОНЦЕ -->
+    <div class="footer-credits">
+        при поддержке by.dora
+    </div>
+
+    <!-- СКРИПТ ПЛАВНОГО ПОЯВЛЕНИЯ ПРИ СКОЛЛЕ -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.15 /* Анимация сработает, когда карточка покажется на 15% */
+        });
+
+        // Запускаем отслеживание для всех карточек
+        document.querySelectorAll('.card').forEach((card) => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
